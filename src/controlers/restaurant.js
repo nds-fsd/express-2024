@@ -1,4 +1,4 @@
-const Restaurant = require("../data/schemas/restaurant");
+
 
 const restaurants = [
   {
@@ -21,7 +21,11 @@ const restaurants = [
   }];
 
 const getAll = async (req, res) => {
-  res.json(restaurants);
+  const query = req.query;
+
+  console.log(query);
+
+  res.json(restaurants.filter((restaurant) => restaurant.name.includes(query.name)));
 };
 
 const getById = async (req, res) => {
