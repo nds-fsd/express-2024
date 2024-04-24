@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = require('./routers/index');
 const cors = require('cors');
+const mongo = require('./data/index');
 
 
 app.use(express.json());
