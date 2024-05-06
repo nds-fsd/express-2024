@@ -6,5 +6,7 @@ const router = express.Router();
 router.get("/", RestaurantController.getAll);
 router.get("/:id", RestaurantController.getById);
 router.post("/", RestaurantController.create);
+router.patch("/:id/add-category", RestaurantController.addCategory);
+
 
 module.exports = router;

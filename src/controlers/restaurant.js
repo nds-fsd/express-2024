@@ -1,46 +1,49 @@
+const Restaurant = require("../data/schemas/restaurant");
 
-
-const restaurants = [
-  {
-    id: 1,
-    name: "Burger King",
-    owner: "John Doe",
-    description: "The best burgers in town",
-    categories: ["Fast Food"],
-  },
-  {
-    id: 2,
-    name: "Pizza Hut",
-    owner: "Jane Doe",
-    categories: ["Fast Food"],
-  },
-  {
-    id: 3,
-    name: "KFC",
-    owner: "John Doe",
-    categories: ["Fast Food"],
-  }];
 
 const getAll = async (req, res) => {
-  const query = req.query;
+  const queryStrings = {
+    categories: req.query.categories,
+  };
 
-  console.log(query);
-
-  res.json(restaurants.filter((restaurant) => restaurant.name.includes(query.name)));
+  console.log(queryStrings);
+  
+  const result = await Restaurant.find(queryStrings).populate(["categories", "owner"]);
+  res.json(result);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = restaurants.find((restaurant) => restaurant.id === Number(id));
+  const result = await Restaurant.findById(id);
   res.json(result);
 };
 
 const create = async (req, res) => {
   const body = req.body;
 
-  restaurants.push(body);
-  res.send(restaurants);
+  const restaurantData = {
+    name: body.name,
+    owner: body.owner,
+    categories: body.categories,
+  };
+
+  const newRestaurant = new Restaurant(restaurantData);
+  await newRestaurant.save();
+  res.send(newRestaurant);
 };
 
+const addCategory = async (req, res) => {
+  const { categoryId } = req.body;
 
-module.exports = { getAll, create, getById };
+  const body = { $push: { categories: categoryId } };
+
+  const updatedRestaurant = await Restaurant.findByIdAndUpdate(
+    req.params.id,
+    body
+  );
+
+  res.status(201).json(updatedRestaurant);
+};
+
+module.exports = { getAll, create, getById, addCategory };
+//.populate(["owner",'categories']);
