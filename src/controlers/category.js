@@ -4,6 +4,7 @@ const getAll = async (req, res) => {
     const result = await Category.find();
     res.json(result);
   };
+  asdasd
   
 const create = async (req, res) => {
     const newCategory = new Category({name: req.body.name});
