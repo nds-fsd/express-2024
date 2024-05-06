@@ -5,6 +5,7 @@ const restaurants = [
     id: 1,
     name: "Burger King",
     owner: "John Doe",
+    description: "The best burgers in town",
     categories: ["Fast Food"],
   },
   {
