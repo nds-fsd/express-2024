@@ -1,5 +1,6 @@
 const Restaurant = require("../data/schemas/restaurant");
 
+
 const getAll = async (req, res) => {
   const queryStrings = {
     categories: req.query.categories,
