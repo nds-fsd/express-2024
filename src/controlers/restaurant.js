@@ -7,13 +7,13 @@ const getAll = async (req, res) => {
 
   console.log(queryStrings);
   
-  const result = await Restaurant.find(queryStrings).populate(["categories", "owner"]);
+  const result = await Restaurant.find(queryStrings).populate('owner');
   res.json(result);
 };
 
 const getById = async (req, res) => {
   const { id } = req.params;
-  const result = await Restaurant.findById(id);
+  const result = await Restaurant.findById(id).populate(['owner', 'categories']);
   res.json(result);
 };
 
