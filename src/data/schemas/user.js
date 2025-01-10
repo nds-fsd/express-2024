@@ -1,5 +1,6 @@
 const { Schema, model }  = require('mongoose');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const secret = "oqjnafasdlknfqwfnrew3gofnwer";
 
@@ -9,11 +10,18 @@ const userSchema = new Schema({
     password:   String,
 });
 
+userSchema.pre('save', async function (next) {
+    if (this.isModified('password')) {
+		console.log(this.password);
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+		console.log(this.password);
+    }
+    next();
+});
 
-
-userSchema.methods.comparePassword = function(password) {
-    console.log(password, this.password);
-	return password === this.password;
+userSchema.methods.comparePassword = async function (candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // * Method to generate the JWT (You choose the name)

@@ -8,7 +8,7 @@ const { authRouter } = require('./auth');
 
 const router = express.Router();
 
-router.use('/restaurant', jwtMiddleware,restaurantRouter);
+router.use('/restaurant', jwtMiddleware, restaurantRouter);
 router.use('/category', jwtMiddleware,categoryRouter);
 router.use('/users', jwtMiddleware,addDateMiddleware, userRouter);
 router.use('/auth', authRouter);

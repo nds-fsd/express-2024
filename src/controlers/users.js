@@ -6,6 +6,12 @@ const getUsers = async (req, res) => {
     res.json(allUsers);
 };
 
+const getCurrentUser = async (req, res) => {
+    const userId = req.jwtPayload.id;
+    const currentUser = await User.findById(userId);
+    res.json(currentUser);
+};
+
 const getUser = async (req, res) => {
     const allUsers = await User.findById(req.params.id);
     res.json(allUsers);
@@ -64,5 +70,6 @@ module.exports = {
     createUser,
     updateUser,
     deleteUser,
-    patchUser
+    patchUser,
+    getCurrentUser
 };

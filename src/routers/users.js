@@ -5,6 +5,7 @@ const { addDateMiddleware, validateUser } = require("../middlewares");
 const router = express.Router();
 
 router.get('/', addDateMiddleware, userController.getUsers);
+router.get('/me', addDateMiddleware, userController.getCurrentUser);
 router.get('/:id', addDateMiddleware, userController.getUser);
 router.post('/', validateUser, userController.createUser);
 router.put('/:id', userController.updateUser);
